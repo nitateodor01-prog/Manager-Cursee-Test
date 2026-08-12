@@ -1,0 +1,1 @@
+v5: reparare salvare curse; persistenta robusta in localStorage si refresh fara blocarea salvarii.

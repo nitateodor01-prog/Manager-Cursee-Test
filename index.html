@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon.svg">
+<title>Gestiuni Curse Gheorghe Teodor Nita</title>
+<style>
+:root{--bg:#f3f4f6;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--dark:#111827;--green:#047857;--red:#b91c1c;--blue:#1d4ed8}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+header{background:var(--dark);color:#fff;padding:18px max(16px,env(safe-area-inset-left));position:sticky;top:0;z-index:5}header h1{margin:0;font-size:21px}
+.wrap{max-width:1200px;margin:auto;padding:16px 16px 90px}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}.label{font-size:11px;color:var(--muted);text-transform:uppercase}.value{font-size:23px;font-weight:800;margin-top:5px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px}.primary{background:var(--dark);color:#fff;border-color:var(--dark)}.danger{background:var(--red);color:#fff}
+.tabs{display:flex;gap:6px;overflow:auto;margin:12px 0}.tabs button{white-space:nowrap}.firm{cursor:pointer}.firm h3{margin:0 0 7px}
+.table{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px}.table table{border-collapse:collapse;width:100%;min-width:1200px}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);font-size:13px;text-align:left;white-space:nowrap}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;padding:12px}.modal.open{display:flex;align-items:flex-end;justify-content:center}.box{background:#fff;width:min(900px,100%);max-height:94vh;overflow:auto;border-radius:18px;padding:18px}
+.form{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.field input,.field select,.field textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px}.full{grid-column:1/-1}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:7px;z-index:10}.bottom button{border:0;background:none;padding:7px;font-size:11px}
+.empty{text-align:center;padding:25px;color:var(--muted)}.profit{color:var(--green)}.loss{color:var(--red)}
+.landing{min-height:calc(100vh - 100px);display:flex;align-items:center;justify-content:center}.landingbox{width:min(700px,100%);text-align:center}.landingbox h2{font-size:28px;margin-bottom:25px}.choice{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin:12px 0;text-align:left;cursor:pointer;box-shadow:0 2px 8px #0000000a}.choice:hover{border-color:#9ca3af}.choice b{font-size:20px}.choice small{display:block;color:var(--muted);margin-top:5px}
+.subnav{display:flex;align-items:center;justify-content:space-between;gap:10px}.notice{padding:11px;border-radius:10px;background:#f9fafb;border:1px solid var(--line);font-size:13px;margin:10px 0}.commission-paid{background:#ecfdf5}.commission-unpaid{background:#fef2f2}.commission-paid td{color:#065f46}.commission-unpaid td{color:#991b1b}
+@media(max-width:600px){.form{grid-template-columns:1fr}}
+#side{position:fixed;left:0;top:0;bottom:0;width:290px;background:#111827;color:#fff;z-index:30;padding:20px;transform:translateX(-100%);transition:.25s;box-shadow:10px 0 30px #0003}#side.open{transform:translateX(0)}#side h2{font-size:18px;margin:0 0 18px}.sidebtn{width:100%;padding:13px;margin:5px 0;border:0;border-radius:11px;text-align:left;background:#1f2937;color:#fff;font-size:15px}.sidebtn.active{background:#fff;color:#111827}.sideclose{background:none;border:0;color:#fff;font-size:28px;float:right}.overlay{display:none;position:fixed;inset:0;background:#0005;z-index:25}.overlay.open{display:block}.hamb{position:fixed;top:12px;left:12px;z-index:10;background:#fff;border:0;border-radius:10px;padding:9px 12px;font-size:20px}</style>
+</head>
+<body>
+<button class="hamb" onclick="toggleSide()">☰</button><div id="overlay" class="overlay" onclick="toggleSide()"></div><aside id="side"><button class="sideclose" onclick="toggleSide()">×</button><h2>Gestiuni Curse</h2><button class="sidebtn" onclick="navSide('dashboard')">⌂ Dashboard</button><button class="sidebtn" onclick="navSide('trips')">🚚 Curse</button><button class="sidebtn" onclick="navSide('commissions')">% Comision</button><button class="sidebtn" onclick="navSide('calendar')">▣ Bani în cont</button><button class="sidebtn" onclick="navSide('expenses')">▤ Cheltuieli</button><button class="sidebtn" onclick="navSide('reports')">▥ Rapoarte</button><button class="sidebtn" onclick="carrierForm()">🚛 Transportatori</button></aside><header><h1>Gestiuni Curse Gheorghe Teodor Nita</h1></header>
+
+<div id="landing" class="wrap landing">
+ <div class="landingbox">
+  <h2>Alege gestiunea</h2>
+  <div class="choice" onclick="enter('Gheorghe Teodor Nita')"><b>Gheorghe Teodor Nita</b><small>Intrare în gestiunea principală</small></div>
+  <div class="choice" onclick="enter('Blandios')"><b>Blandios</b><small>Curse, costuri, profit și plăți transportatori</small></div>
+  <div class="choice" onclick="enter('Triomar')"><b>Triomar</b><small>Curse, costuri, profit și plăți transportatori</small></div>
+ </div>
+</div>
+
+<div id="app" class="wrap" style="display:none">
+ <div class="subnav"><div><b id="sectionTitle">Gheorghe Teodor Nita</b></div><button class="btn" onclick="home()">Schimbă gestiunea</button></div>
+ <div class="tabs"><button class="btn primary" onclick="page('dashboard')">Dashboard</button><button class="btn" onclick="page('trips')">Curse</button><button class="btn" onclick="page('calendar')">Bani în cont</button><button class="btn" onclick="page('commissions')">Comision</button><button class="btn" onclick="page('reports')">Rapoarte</button></div>
+
+ <section id="dashboard" class="page active">
+  <div class="grid" id="kpi"></div>
+  <div class="notice">Calcul financiar: <b>TVA 21%</b> este tratat în această aplicație conform regulii tale: TVA-ul încasat de Gheorghe Teodor Nita este inclus în profitul gestiunii principale. Blandios/Triomar și transportatorul sunt calculați fără TVA.</div>
+  <h2>Curse</h2><div id="dashboardTables"></div>
+  <div class="actions"><button class="btn primary" onclick="tripForm()">+ Cursă</button><button class="btn" onclick="expenseForm()">+ Cheltuială</button><button class="btn" onclick="accountForm()">+ Cont</button><button class="btn" onclick="backup()">Backup</button><label class="btn">Import<input id="imp" type="file" accept=".json" hidden></label></div>
+ </section>
+
+ <section id="trips" class="page">
+  <div class="actions"><button class="btn primary" onclick="tripForm()">+ Cursă</button><select class="btn" id="firmFilter" onchange="renderTrips()"><option value="">Toate firmele</option><option>Blandios</option><option>Triomar</option></select></div>
+  <div class="table"><table><thead><tr><th>Gestiune</th><th>Cursă</th><th>Client</th><th>Rută</th><th>Preț client TVA incl.</th><th>TVA 21%</th><th>Încasare fără TVA</th><th>Cost</th><th>Transportator</th><th>Comision</th><th>Profit</th><th>CMR</th><th>Factură</th><th>Încasare</th><th>Plată transportator</th><th>Status</th><th></th></tr></thead><tbody id="tripRows"></tbody></table></div>
+ </section>
+
+ <section id="calendar" class="page"><h2>Bani în cont 30 zile</h2><div class="table"><table><thead><tr><th>Data</th><th>Intrări efective</th><th>Transportatori</th><th>Confirmig</th><th>Cheltuieli</th><th>Net</th><th>Sold estimat</th></tr></thead><tbody id="calRows"></tbody></table></div></section>
+ <section id="commissions" class="page">
+<div class="card"><div class="subnav"><h2 style="margin:0">Comision</h2><button class="btn primary" onclick="personForm()">+ Persoană</button></div>
+<div class="notice">Aici apar toate cursele. Alegi persoana, suma comisionului și bifezi când comisionul a fost plătit. Verde = plătit. Roșu = neachitat.</div>
+<div class="table"><table><thead><tr><th>Firmă</th><th>Cursă</th><th>Client</th><th>Profit înainte de comision</th><th>Persoană</th><th>Comision</th><th>Profit după comision</th><th>Plătit</th></tr></thead><tbody id="commissionRows"></tbody></table></div></div>
+</section>
+<section id="expenses" class="page">
+<div class="card"><div class="subnav"><h2 style="margin:0">Cheltuieli</h2><button class="btn primary" onclick="expenseForm()">+ Cheltuială</button></div>
+<div class="actions">
+<select class="btn" id="expenseFirmFilter" onchange="renderExpenses()"><option value="">Toate gestiunile</option><option>Gheorghe Teodor Nita</option><option>Blandios</option><option>Triomar</option></select>
+<select class="btn" id="expenseCatFilter" onchange="renderExpenses()"><option value="">Toate categoriile</option><option>Gestiune</option><option>Angajați</option><option>Altele</option></select>
+</div><div class="grid" id="expenseTotal"></div>
+<div class="table"><table><thead><tr><th>Data</th><th>Gestiune</th><th>Categorie</th><th>Descriere</th><th>Sumă</th><th>Plătit</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div>
+</section><section id="reports" class="page"><div class="card"><h2>Rapoarte</h2><div id="reportsBox"></div></div></section>
+</div>
+<nav class="bottom"><button onclick="page('dashboard')">⌂<br>Acasă</button><button onclick="page('trips')">🚚<br>Curse</button><button onclick="page('calendar')">▣<br>Bani în cont</button><button onclick="page('commissions')">%</button><button onclick="page('reports')">▥<br>Rapoarte</button></nav>
+<div class="modal" id="modal"><div class="box"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="mt"></h2><button class="btn" onclick="closeM()">Închide</button></div><div id="mb"></div></div></div>
+
+<script>
+const K="cm_pwa_v5";let raw=localStorage.getItem(K)||localStorage.getItem("cm_pwa_v4")||localStorage.getItem("cm_pwa_v2");let db=JSON.parse(raw||"null")||{trips:[],expenses:[],accounts:[],people:[],carriers:[],clients:[]};db.people=db.people||[];db.carriers=db.carriers||[];db.clients=db.clients||[];db.people=db.people||[];let current="Gheorghe Teodor Nita";
+const $=x=>document.getElementById(x),today=()=>new Date().toISOString().slice(0,10);
+function save(){
+  localStorage.setItem(K,JSON.stringify(db));
+  try{render()}catch(err){console.error("Render error after save:",err)}
+}
+function money(x,c="EUR"){try{return new Intl.NumberFormat("ro-RO",{style:"currency",currency:c}).format(+x||0)}catch{return(+x||0).toFixed(2)+" "+c}}
+function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function toggleSide(){document.getElementById("side").classList.toggle("open");document.getElementById("overlay").classList.toggle("open")}
+function navSide(id){page(id);if(document.getElementById("side").classList.contains("open"))toggleSide()}
+function page(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(id).classList.add("active")}
+function home(){$("app").style.display="none";$("landing").style.display="flex"}
+function enter(f){current=f;$("sectionTitle").textContent=f;$("landing").style.display="none";$("app").style.display="block";page("dashboard");render()}
+function days(d,n){let x=new Date(d+"T12:00:00");x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)}
+function estimate(t){if(t.manual)return t.manual;if(!t.docsDate)return"";let latest=t.docsDate,d=new Date(latest+"T12:00:00"),w=d.getDay();let n=w==2?3:w==3?2:w==4?8:w==5?7:5;return days(latest,n)}
+function vat(t){return (+t.sale||0)*.21}
+function saleNet(t){return (+t.sale||0)+vat(t)}
+function baseProfit(t){return (+t.sale||0)-(+t.cost||0)-(+t.confirmig||0)-(+t.direct||0)}
+function commissionAmount(t){return +t.commissionAmount||0}
+function profit(t){return baseProfit(t)-commissionAmount(t)-((+t.sale||0)*.01)}
+function status(t){if(t.collected)return"Încasată";if(!t.docsDate)return"Documente lipsă";return estimate(t)<today()?"Întârziată":"Programată"}
+function visibleTrips(){return current==="Gheorghe Teodor Nita"?db.trips:db.trips.filter(t=>t.firm===current)}
+function effectiveBalance(){
+ let b=db.accounts.reduce((s,a)=>s+(+a.balance||0),0);
+ // Accounts represent the base/current balances. Add movements recorded in the app.
+ b += db.trips.filter(t=>t.collected).reduce((s,t)=>s+(+t.sale||0),0);
+ b -= db.trips.filter(t=>t.paidCarrier).reduce((s,t)=>s+(+t.cost||0),0);
+ b -= db.trips.filter(t=>t.paidConfirmig).reduce((s,t)=>s+(+t.confirmig||0),0);
+ b -= db.expenses.filter(e=>e.paid).reduce((s,e)=>s+(+e.amount||0),0);
+ return b;
+}
+function receivable(){return visibleTrips().filter(t=>!t.collected&&estimate(t)).reduce((s,t)=>s+(+t.sale||0),0)}
+function payable(){let ts=visibleTrips();return ts.filter(t=>!t.paidCarrier).reduce((s,t)=>s+(+t.cost||0),0)+ts.filter(t=>!t.paidConfirmig).reduce((s,t)=>s+(+t.confirmig||0),0)+db.expenses.filter(e=>!e.paid).reduce((s,e)=>s+(+e.amount||0),0)}
+function renderDashboardTables(){
+ let out="";
+ ["Triomar","Blandios"].forEach(f=>{
+  let xs=db.trips.filter(t=>t.firm===f);
+  out+=`<div class="card" style="margin:12px 0"><div class="subnav"><h3 style="margin:0">${f}</h3><b>${xs.length} curse</b></div><div class="table"><table style="min-width:700px"><thead><tr><th>Cursă</th><th>Client</th><th>Preț</th><th>Cost ${f}</th><th>Profit</th><th>Comision</th></tr></thead><tbody>${xs.length?xs.map(t=>`<tr><td>${esc(t.name)}</td><td>${esc(t.client)}</td><td>${money(t.sale,t.currency)}</td><td>${money(t.cost,t.currency)}</td><td>${money(profit(t),t.currency)}</td><td>${money(commissionAmount(t),t.currency)}</td></tr>`).join(""):`<tr><td colspan="6" class="empty">Nu există curse.</td></tr>`}</tbody></table></div></div>`;
+ });
+ $("dashboardTables").innerHTML=out;
+}
+function render(){
+ let ts=visibleTrips(),bal=effectiveBalance(),inc=receivable(),out=payable(),tp=ts.reduce((s,t)=>s+profit(t),0),ex=db.expenses.reduce((s,e)=>s+(+e.amount||0),0);
+ $("kpi").innerHTML=[["Bani disponibili",bal],["De încasat",inc],["De plătit",out],["Sold estimat",bal+inc-out],["Profit curse",tp],["Profit net",tp-ex]].map(x=>`<div class="card"><div class="label">${x[0]}</div><div class="value">${money(x[1])}</div></div>`).join("");
+ const oldFirms=$("firms"); if(oldFirms){oldFirms.innerHTML=["Blandios","Triomar"].map(f=>{let xs=db.trips.filter(t=>t.firm==f);return`<div class="card firm" onclick="current='${f}';$('sectionTitle').textContent='${f}';page('dashboard');render()"><h3>${f}</h3><b>${xs.length} curse</b><br>Vânzări client: ${money(xs.reduce((s,t)=>s+(+t.sale||0),0))}<br>Profit: ${money(xs.reduce((s,t)=>s+profit(t),0))}</div>`}).join("")}
+ renderTrips();renderCalendar();renderCommissions();renderExpenses();renderDashboardTables();$("reportsBox").innerHTML=`Gestiune: <b>${esc(current)}</b><br>Curse: <b>${ts.length}</b><br>Vânzări client (TVA inclus): <b>${money(ts.reduce((s,t)=>s+(+t.sale||0),0))}</b><br>TVA 21% calculat: <b>${money(ts.reduce((s,t)=>s+vat(t),0))}</b><br>Costuri B/T: <b>${money(ts.reduce((s,t)=>s+(+t.cost||0),0))}</b><br>Profit după comisioane: <b>${money(tp)}</b><br>Comisioane: <b>${money(ts.reduce((s,t)=>s+commissionAmount(t),0))}</b><br>Cheltuieli generale: <b>${money(ex)}</b><br>Profit net: <b>${money(tp-ex)}</b>`;
+}
+function renderTrips(){let f=$("firmFilter").value,d=visibleTrips().filter(t=>!f||t.firm==f);$("tripRows").innerHTML=d.length?d.map(t=>`<tr><td>${esc(t.firm)}</td><td>${esc(t.name)}</td><td>${esc(t.client)}</td><td>${esc(t.route)}</td><td>${money(t.sale,t.currency)}</td><td>${money(vat(t),t.currency)}</td><td>${money(saleNet(t),t.currency)}</td><td>${money(t.cost,t.currency)}</td><td>${esc(t.carrier)}</td><td>${money(commissionAmount(t),t.currency)}</td><td class="${profit(t)>=0?"profit":"loss"}">${money(profit(t),t.currency)}</td><td>${t.cmr||"—"}</td><td>${t.invoice||"—"}</td><td>${t.collected||estimate(t)||"—"}</td><td>${t.carrierPay||"—"}</td><td>${status(t)}</td><td><button class="btn" onclick="tripForm('${t.id}')">Edit</button></td></tr>`).join(""):`<tr><td colspan="17" class="empty">Nu există curse.</td></tr>`}
+function renderCalendar(){
+ let bal=effectiveBalance(),h="";for(let i=0;i<30;i++){let d=days(today(),i),ins=visibleTrips().filter(t=>t.collected==d).reduce((s,t)=>s+(+t.sale||0),0),car=visibleTrips().filter(t=>t.paidCarrier==d).reduce((s,t)=>s+(+t.cost||0),0),con=visibleTrips().filter(t=>t.paidConfirmig==d).reduce((s,t)=>s+(+t.confirmig||0),0),ex=db.expenses.filter(e=>e.paid==d).reduce((s,e)=>s+(+e.amount||0),0),net=ins-car-con-ex;bal+=net;h+=`<tr><td>${d}</td><td>${money(ins)}</td><td>${money(car)}</td><td>${money(con)}</td><td>${money(ex)}</td><td>${money(net)}</td><td>${money(bal)}</td></tr>`}$("calRows").innerHTML=h}
+function openM(t,b){$("mt").textContent=t;$("mb").innerHTML=b;$("modal").classList.add("open")}function closeM(){$("modal").classList.remove("open")}
+function renderCommissions(){
+  const rows=db.trips.map(t=>{
+    const paid=!!t.commissionPaid;
+    return `<tr class="${paid?"commission-paid":"commission-unpaid"}">
+      <td>${esc(t.firm)}</td><td>${esc(t.name)}</td><td>${esc(t.client)}</td>
+      <td>${money(baseProfit(t),t.currency)}</td>
+      <td><select onchange="setCommissionPerson('${t.id}',this.value)"><option value="">Alege persoana</option>${(db.people||[]).map(p=>`<option ${t.commissionPerson===p?"selected":""}>${esc(p)}</option>`).join("")}</select></td>
+      <td><input style="width:100px;padding:7px;border:1px solid #ddd;border-radius:7px" type="number" step=".01" value="${commissionAmount(t)||""}" onchange="setCommissionAmount('${t.id}',this.value)"></td>
+      <td><b>${money(profit(t),t.currency)}</b></td>
+      <td><label><input type="checkbox" ${paid?"checked":""} onchange="setCommissionPaid('${t.id}',this.checked)"> ${paid?"Plătit":"Neachitat"}</label></td>
+    </tr>`;
+  }).join("");
+  $("commissionRows").innerHTML=rows||`<tr><td colspan="8" class="empty">Nu există curse.</td></tr>`;
+}
+function setCommissionPerson(id,v){const t=db.trips.find(x=>x.id===id);if(t){t.commissionPerson=v;save()}}
+function setCommissionAmount(id,v){const t=db.trips.find(x=>x.id===id);if(t){t.commissionAmount=+v||0;save()}}
+function setCommissionPaid(id,v){const t=db.trips.find(x=>x.id===id);if(t){t.commissionPaid=v;save()}}
+function carrierForm(){
+  openM("Baza de date transportatori",`<div class="form"><div class="field full"><label>Nume transportator</label><input id="carrierName" placeholder="Ex. Transportator SRL"></div></div><div class="actions"><button class="btn primary" onclick="addCarrier()">Adaugă</button></div><div class="notice"><b>Transportatori existenți</b><br>${(db.carriers||[]).map((p,i)=>`${esc(p)} <button class="btn" onclick="removeCarrier(${i})">Șterge</button>`).join("<br>")||"Niciun transportator."}</div>`);
+}
+function addCarrier(){let n=$("carrierName").value.trim();if(!n)return;db.carriers=db.carriers||[];if(!db.carriers.includes(n))db.carriers.push(n);save();carrierForm()}
+function removeCarrier(i){db.carriers.splice(i,1);save();carrierForm()}
+function renderExpenses(){
+ let ff=$("expenseFirmFilter")?.value||"",cf=$("expenseCatFilter")?.value||"";
+ let xs=db.expenses.filter(e=>(!ff||e.firm===ff)&&(!cf||e.cat===cf));
+ let total=xs.reduce((s,e)=>s+(+e.amount||0),0);
+ $("expenseTotal").innerHTML=`<div class="card"><div class="label">Total cheltuieli filtrate</div><div class="value">${money(total)}</div></div>`;
+ $("expenseRows").innerHTML=xs.length?xs.map(e=>`<tr><td>${e.due||"—"}</td><td>${esc(e.firm||"—")}</td><td>${esc(e.cat||"Altele")}</td><td>${esc(e.details)}</td><td>${money(e.amount)}</td><td>${e.paid?"Da":"Nu"}</td></tr>`).join(""):`<tr><td colspan="6" class="empty">Nu există cheltuieli.</td></tr>`;
+}
+function personForm(){
+  const people=db.people||[];
+  openM("Persoane pentru comision",`<div class="form"><div class="field full"><label>Nume persoană</label><input id="personName" placeholder="Ex. Ion Popescu"></div></div>
+  <div class="actions"><button class="btn primary" onclick="addPerson()">Adaugă persoană</button></div>
+  <div class="notice"><b>Persoane existente</b><br>${people.length?people.map((p,i)=>`${esc(p)} <button class="btn" onclick="removePerson(${i})">Șterge</button>`).join("<br>"):"Nicio persoană adăugată."}</div>`);
+}
+function addPerson(){const n=$("personName").value.trim();if(!n)return;db.people=db.people||[];if(!db.people.includes(n))db.people.push(n);save();personForm()}
+function removePerson(i){db.people.splice(i,1);save();personForm()}
+function tripForm(id){
+ let t=db.trips.find(x=>x.id==id)||{id:"t"+Date.now(),firm:current==="Gheorghe Teodor Nita"?"Blandios":current,currency:"EUR"};
+ openM(id?"Editează cursă":"Cursă nouă",`<form onsubmit="saveTrip(event,'${t.id}')"><div class="form">
+<div class="field"><label>Gestiune</label><select name="firm"><option ${t.firm=="Blandios"?"selected":""}>Blandios</option><option ${t.firm=="Triomar"?"selected":""}>Triomar</option></select></div>
+<div class="field"><label>ID / cursă</label><input name="name" value="${esc(t.name)}" required></div><div class="field"><label>Data cursei</label><input type="date" name="tripDate" value="${t.tripDate||today()}"></div><div class="field"><label>Client</label><input name="client" value="${esc(t.client)}"></div><div class="field full"><label>Rută</label><input name="route" value="${esc(t.route)}"></div><div class="field"><label>Transportator</label><select name="carrier"><option value="">Alege transportator</option>${(db.carriers||[]).map(p=>`<option ${t.carrier===p?"selected":""}>${esc(p)}</option>`).join("")}</select></div><div class="field"><label>Monedă</label><select name="currency"><option>EUR</option><option>RON</option><option>USD</option></select></div>
+<div class="field"><label>Preț client fără TVA</label><input type="number" step=".01" name="sale" value="${t.sale||""}" required></div><div class="field"><label>Cost Blandios/Triomar, fără TVA</label><input type="number" step=".01" name="cost" value="${t.cost||""}"></div><div class="field"><label>Cost transportator, fără TVA</label><input type="number" step=".01" name="carrierCost" value="${t.carrierCost||""}"></div><div class="field"><label>Confirmig</label><input type="number" step=".01" name="confirmig" value="${t.confirmig||""}"></div><div class="field"><label>Alte costuri</label><input type="number" step=".01" name="direct" value="${t.direct||""}"></div>
+<div class="field"><label>CMR + factură primite</label><input type="date" name="docsDate" value="${t.docsDate||""}"></div><div class="field"><label>Data încasării</label><input type="date" name="collected" value="${t.collected||""}"></div><div class="field"><label>Override încasare</label><input type="date" name="manual" value="${t.manual||""}"></div><div class="field"><label>Data plată transportator</label><input type="date" name="carrierPay" value="${t.carrierPay||""}"></div><div class="field"><label>Plată efectivă transportator</label><input type="date" name="paidCarrier" value="${t.paidCarrier||""}"></div><div class="field"><label>Data plată Confirmig</label><input type="date" name="confirmigPay" value="${t.confirmigPay||""}"></div><div class="field"><label>Plată efectivă Confirmig</label><input type="date" name="paidConfirmig" value="${t.paidConfirmig||""}"></div>
+</div><div class="notice">Profit cursă = preț client cu TVA − cost B/T fără TVA − transportator fără TVA − Confirmig − alte costuri. TVA-ul este afișat separat și, conform regulii cerute, rămâne inclus în profitul calculat al gestiunii Gheorghe Teodor Nita.</div><div class="actions"><button class="btn primary">Salvează</button></div></form>`)}
+function saveTrip(e,id){
+  e.preventDefault();
+  try{
+    const form=e.target;
+    const f=new FormData(form);
+    let t=db.trips.find(x=>x.id===id);
+    const isNew=!t;
+    if(!t){t={id:id||("t"+Date.now())};db.trips.push(t)}
+    for(const [k,v] of f.entries()) t[k]=v;
+    ["sale","cost","carrierCost","confirmig","direct"].forEach(k=>t[k]=Number(t[k])||0);
+    t.collected=t.collected||"";
+    t.paidCarrier=t.paidCarrier||"";
+    t.paidConfirmig=t.paidConfirmig||"";
+    db.trips=db.trips.map(x=>x.id===t.id?t:x);
+    localStorage.setItem(K,JSON.stringify(db));
+    closeM();
+    try{render()}catch(err){console.error("Render error:",err)}
+  }catch(err){
+    console.error("Save trip error:",err);
+    alert("Cursa nu a putut fi salvată. Verifică datele introduse.");
+  }
+}
+function expenseForm(){let id="e"+Date.now();openM("Cheltuială nouă",`<form onsubmit="saveExp(event,'${id}')"><div class="form"><div class="field"><label>Scadență</label><input type="date" name="due" value="${today()}"></div><div class="field"><label>Gestiune</label><select name="firm"><option>Gheorghe Teodor Nita</option><option>Blandios</option><option>Triomar</option></select></div><div class="field"><label>Categorie</label><select name="cat"><option>Gestiune</option><option>Angajați</option><option>Altele</option></select></div><div class="field full"><label>Descriere</label><input name="details"></div><div class="field"><label>Sumă</label><input type="number" step=".01" name="amount"></div><div class="field"><label>Cont</label><input name="account"></div><div class="field"><label>Data plății</label><input type="date" name="paid"></div></div><div class="actions"><button class="btn primary">Salvează</button></div></form>`)}
+function saveExp(e,id){e.preventDefault();let f=new FormData(e.target);db.expenses.push({id,due:f.get("due"),firm:f.get("firm"),cat:f.get("cat"),details:f.get("details"),amount:+f.get("amount")||0,account:f.get("account"),paid:f.get("paid")||""});save();closeM()}
+function accountForm(){let id="a"+Date.now();openM("Cont nou",`<form onsubmit="saveAcc(event,'${id}')"><div class="form"><div class="field"><label>Nume cont</label><input name="name" required></div><div class="field"><label>Monedă</label><select name="currency"><option>EUR</option><option>RON</option><option>USD</option></select></div><div class="field"><label>Sold actual</label><input type="number" step=".01" name="balance"></div></div><div class="actions"><button class="btn primary">Salvează</button></div></form>`)}
+function saveAcc(e,id){e.preventDefault();let f=new FormData(e.target);db.accounts.push({id,name:f.get("name"),currency:f.get("currency"),balance:+f.get("balance")||0});save();closeM()}
+function backup(){let b=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="gestiuni-curse-backup.json";a.click()}
+$("imp").onchange=e=>{let r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save()}catch{alert("Fișier invalid")}};r.readAsText(e.target.files[0])}
+render();
+</script>
+</body></html>
