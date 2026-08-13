@@ -1,1 +1,1 @@
-v10: reparata navigarea de la Alege gestiunea prin restaurarea functiei DOM $().
+v11: reparate erorile JavaScript care blocau toate butoanele; saveExp curat si persistenta.

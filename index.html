@@ -82,13 +82,12 @@ header{background:var(--dark);color:#fff;padding:18px max(16px,env(safe-area-ins
 <div class="modal" id="modal"><div class="box"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="mt"></h2><button class="btn" onclick="closeM()">Închide</button></div><div id="mb"></div></div></div>
 
 <script>
-const K="cm_pwa_v10";let raw=localStorage.getItem(K);let db=JSON.parse(raw||"null")||{trips:[],expenses:[],accounts:[],people:[],carriers:[],clients:[]};db.people=db.people||[];db.carriers=db.carriers||[];db.clients=db.clients||[];db.people=db.people||[];let current="Gheorghe Teodor Nita";
+const K="cm_pwa_v11";let raw=localStorage.getItem(K);let db=JSON.parse(raw||"null")||{trips:[],expenses:[],accounts:[],people:[],carriers:[],clients:[]};db.people=db.people||[];db.carriers=db.carriers||[];db.clients=db.clients||[];db.people=db.people||[];let current="Gheorghe Teodor Nita";
 const $=x=>document.getElementById(x),today=()=>new Date().toISOString().slice(0,10);
 function save(){
   localStorage.setItem(K,JSON.stringify(db));
   try{render()}catch(err){console.error("Render error after save:",err)}
 }
-function $(id){return document.getElementById(id)}
 function money(x,c="EUR"){try{return new Intl.NumberFormat("ro-RO",{style:"currency",currency:c}).format(+x||0)}catch{return(+x||0).toFixed(2)+" "+c}}
 function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 function toggleSide(){document.getElementById("side").classList.toggle("open");document.getElementById("overlay").classList.toggle("open")}
@@ -267,11 +266,24 @@ function saveExp(e,id){
  try{
   const f=new FormData(e.target);
   db.expenses=db.expenses||[];
-  db.expenses.push({id,due:f.get("due"),firm:f.get("firm"),cat:f.get("cat"),details:f.get("details"),amount:Number(f.get("amount"))||0,account:f.get("account"),paid:f.get("paid")||""});
+  db.expenses.push({
+   id:id||("e"+Date.now()),
+   due:f.get("due")||"",
+   firm:f.get("firm")||current,
+   cat:f.get("cat")||"Altele",
+   details:f.get("details")||"",
+   amount:Number(f.get("amount"))||0,
+   account:f.get("account")||"",
+   paid:f.get("paid")||""
+  });
   localStorage.setItem(K,JSON.stringify(db));
-  closeM(); render();
- }catch(err){console.error(err);alert("Cheltuiala nu a putut fi salvată.");}
-});save();closeM()}
+  closeM();
+  render();
+ }catch(err){
+  console.error("saveExp error",err);
+  alert("Cheltuiala nu a putut fi salvată.");
+ }
+}
 function accountForm(){let id="a"+Date.now();openM("Cont nou",`<form onsubmit="saveAcc(event,'${id}')"><div class="form"><div class="field"><label>Nume cont</label><input name="name" required></div><div class="field"><label>Monedă</label><select name="currency"><option>EUR</option><option>RON</option><option>USD</option></select></div><div class="field"><label>Sold actual</label><input type="number" step=".01" name="balance"></div></div><div class="actions"><button class="btn primary">Salvează</button></div></form>`)}
 function saveAcc(e,id){e.preventDefault();let f=new FormData(e.target);db.accounts.push({id,name:f.get("name"),currency:f.get("currency"),balance:+f.get("balance")||0});save();closeM()}
 function backup(){let b=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="gestiuni-curse-backup.json";a.click()}
