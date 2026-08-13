@@ -1,1 +1,1 @@
-v6 test: Acasa, hamburger fara suprapunere, TVA/IRPF scoase din gestiune, CMR lipsa rosu, filtrare stricta, rapoarte separate.
+v7: fluxuri separate Gheorghe/Blandios/Triomar, profit per gestiune, clienti simpli, cheltuieli edit/delete, comision suma fixa, TVA eliminat din gestiune.
