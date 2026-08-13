@@ -1,1 +1,1 @@
-v5: reparare salvare curse; persistenta robusta in localStorage si refresh fara blocarea salvarii.
+v6 test: Acasa, hamburger fara suprapunere, TVA/IRPF scoase din gestiune, CMR lipsa rosu, filtrare stricta, rapoarte separate.

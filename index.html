@@ -18,12 +18,12 @@ header{background:var(--dark);color:#fff;padding:18px max(16px,env(safe-area-ins
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:7px;z-index:10}.bottom button{border:0;background:none;padding:7px;font-size:11px}
 .empty{text-align:center;padding:25px;color:var(--muted)}.profit{color:var(--green)}.loss{color:var(--red)}
 .landing{min-height:calc(100vh - 100px);display:flex;align-items:center;justify-content:center}.landingbox{width:min(700px,100%);text-align:center}.landingbox h2{font-size:28px;margin-bottom:25px}.choice{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin:12px 0;text-align:left;cursor:pointer;box-shadow:0 2px 8px #0000000a}.choice:hover{border-color:#9ca3af}.choice b{font-size:20px}.choice small{display:block;color:var(--muted);margin-top:5px}
-.subnav{display:flex;align-items:center;justify-content:space-between;gap:10px}.notice{padding:11px;border-radius:10px;background:#f9fafb;border:1px solid var(--line);font-size:13px;margin:10px 0}.commission-paid{background:#ecfdf5}.commission-unpaid{background:#fef2f2}.commission-paid td{color:#065f46}.commission-unpaid td{color:#991b1b}
+.subnav{display:flex;align-items:center;justify-content:space-between;gap:10px}.notice{padding:11px;border-radius:10px;background:#f9fafb;border:1px solid var(--line);font-size:13px;margin:10px 0}.missing-docs{background:#fef2f2}.missing-docs td{color:#991b1b}.commission-paid{background:#ecfdf5}.commission-unpaid{background:#fef2f2}.commission-paid td{color:#065f46}.commission-unpaid td{color:#991b1b}
 @media(max-width:600px){.form{grid-template-columns:1fr}}
-#side{position:fixed;left:0;top:0;bottom:0;width:290px;background:#111827;color:#fff;z-index:30;padding:20px;transform:translateX(-100%);transition:.25s;box-shadow:10px 0 30px #0003}#side.open{transform:translateX(0)}#side h2{font-size:18px;margin:0 0 18px}.sidebtn{width:100%;padding:13px;margin:5px 0;border:0;border-radius:11px;text-align:left;background:#1f2937;color:#fff;font-size:15px}.sidebtn.active{background:#fff;color:#111827}.sideclose{background:none;border:0;color:#fff;font-size:28px;float:right}.overlay{display:none;position:fixed;inset:0;background:#0005;z-index:25}.overlay.open{display:block}.hamb{position:fixed;top:12px;left:12px;z-index:10;background:#fff;border:0;border-radius:10px;padding:9px 12px;font-size:20px}</style>
+#side{position:fixed;left:0;top:0;bottom:0;width:290px;background:#111827;color:#fff;z-index:30;padding:20px;transform:translateX(-100%);transition:.25s;box-shadow:10px 0 30px #0003}#side.open{transform:translateX(0)}#side h2{font-size:18px;margin:0 0 18px}.sidebtn{width:100%;padding:13px;margin:5px 0;border:0;border-radius:11px;text-align:left;background:#1f2937;color:#fff;font-size:15px}.sidebtn.active{background:#fff;color:#111827}.sideclose{background:none;border:0;color:#fff;font-size:28px;float:right}.overlay{display:none;position:fixed;inset:0;background:#0005;z-index:25}.overlay.open{display:block}.hamb{position:absolute;left:16px;top:50%;transform:translateY(-50%);z-index:10;background:#fff;color:#111827;border:0;border-radius:10px;padding:8px 11px;font-size:19px;line-height:1}</style>
 </head>
 <body>
-<button class="hamb" onclick="toggleSide()">☰</button><div id="overlay" class="overlay" onclick="toggleSide()"></div><aside id="side"><button class="sideclose" onclick="toggleSide()">×</button><h2>Gestiuni Curse</h2><button class="sidebtn" onclick="navSide('dashboard')">⌂ Dashboard</button><button class="sidebtn" onclick="navSide('trips')">🚚 Curse</button><button class="sidebtn" onclick="navSide('commissions')">% Comision</button><button class="sidebtn" onclick="navSide('calendar')">▣ Bani în cont</button><button class="sidebtn" onclick="navSide('expenses')">▤ Cheltuieli</button><button class="sidebtn" onclick="navSide('reports')">▥ Rapoarte</button><button class="sidebtn" onclick="carrierForm()">🚛 Transportatori</button></aside><header><h1>Gestiuni Curse Gheorghe Teodor Nita</h1></header>
+<div id="overlay" class="overlay" onclick="toggleSide()"></div><aside id="side"><button class="sideclose" onclick="toggleSide()">×</button><h2>Gestiuni Curse</h2><button class="sidebtn" onclick="navSide('dashboard')">⌂ Dashboard</button><button class="sidebtn" onclick="navSide('trips')">🚚 Curse</button><button class="sidebtn" onclick="navSide('commissions')">% Comision</button><button class="sidebtn" onclick="navSide('calendar')">▣ Bani în cont</button><button class="sidebtn" onclick="navSide('expenses')">▤ Cheltuieli</button><button class="sidebtn" onclick="navSide('reports')">▥ Rapoarte</button><button class="sidebtn" onclick="carrierForm()">🚛 Transportatori</button></aside><header style="position:sticky"><button class="hamb" onclick="toggleSide()">☰</button><h1 style="text-align:center;padding:0 58px;margin:0;line-height:1.25">Gestiuni Curse Gheorghe Teodor Nita</h1></header>
 
 <div id="landing" class="wrap landing">
  <div class="landingbox">
@@ -36,7 +36,7 @@ header{background:var(--dark);color:#fff;padding:18px max(16px,env(safe-area-ins
 
 <div id="app" class="wrap" style="display:none">
  <div class="subnav"><div><b id="sectionTitle">Gheorghe Teodor Nita</b></div><button class="btn" onclick="home()">Schimbă gestiunea</button></div>
- <div class="tabs"><button class="btn primary" onclick="page('dashboard')">Dashboard</button><button class="btn" onclick="page('trips')">Curse</button><button class="btn" onclick="page('calendar')">Bani în cont</button><button class="btn" onclick="page('commissions')">Comision</button><button class="btn" onclick="page('reports')">Rapoarte</button></div>
+ <div class="tabs"><button class="btn primary" onclick="page('dashboard')">Acasă</button><button class="btn" onclick="page('trips')">Curse</button><button class="btn" onclick="page('calendar')">Bani în cont</button><button class="btn" onclick="page('commissions')">Comision</button><button class="btn" onclick="page('reports')">Rapoarte</button></div>
 
  <section id="dashboard" class="page active">
   <div class="grid" id="kpi"></div>
@@ -46,8 +46,8 @@ header{background:var(--dark);color:#fff;padding:18px max(16px,env(safe-area-ins
  </section>
 
  <section id="trips" class="page">
-  <div class="actions"><button class="btn primary" onclick="tripForm()">+ Cursă</button><select class="btn" id="firmFilter" onchange="renderTrips()"><option value="">Toate firmele</option><option>Blandios</option><option>Triomar</option></select></div>
-  <div class="table"><table><thead><tr><th>Gestiune</th><th>Cursă</th><th>Client</th><th>Rută</th><th>Preț client TVA incl.</th><th>TVA 21%</th><th>Încasare fără TVA</th><th>Cost</th><th>Transportator</th><th>Comision</th><th>Profit</th><th>CMR</th><th>Factură</th><th>Încasare</th><th>Plată transportator</th><th>Status</th><th></th></tr></thead><tbody id="tripRows"></tbody></table></div>
+  <div class="actions"><button class="btn primary" onclick="tripForm()">+ Cursă</button><button class="btn" onclick="carrierForm()">🚛 Transportatori</button><select class="btn" id="firmFilter" onchange="renderTrips()"><option value="">Toate firmele</option><option>Blandios</option><option>Triomar</option></select></div>
+  <div class="table"><table><thead><tr><th>Gestiune</th><th>Cursă</th><th>Client</th><th>Rută</th><th>Preț client TVA incl.</th><th>Preț încasat</th><th>Cost</th><th>Transportator</th><th>Comision</th><th>Profit</th><th>CMR</th><th>Factură</th><th>Încasare</th><th>Plată transportator</th><th>Status</th><th></th></tr></thead><tbody id="tripRows"></tbody></table></div>
  </section>
 
  <section id="calendar" class="page"><h2>Bani în cont 30 zile</h2><div class="table"><table><thead><tr><th>Data</th><th>Intrări efective</th><th>Transportatori</th><th>Confirmig</th><th>Cheltuieli</th><th>Net</th><th>Sold estimat</th></tr></thead><tbody id="calRows"></tbody></table></div></section>
@@ -84,11 +84,11 @@ function home(){$("app").style.display="none";$("landing").style.display="flex"}
 function enter(f){current=f;$("sectionTitle").textContent=f;$("landing").style.display="none";$("app").style.display="block";page("dashboard");render()}
 function days(d,n){let x=new Date(d+"T12:00:00");x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)}
 function estimate(t){if(t.manual)return t.manual;if(!t.docsDate)return"";let latest=t.docsDate,d=new Date(latest+"T12:00:00"),w=d.getDay();let n=w==2?3:w==3?2:w==4?8:w==5?7:5;return days(latest,n)}
-function vat(t){return (+t.sale||0)*.21}
-function saleNet(t){return (+t.sale||0)+vat(t)}
+function vat(t){return 0}
+function saleNet(t){return (+t.sale||0)}
 function baseProfit(t){return (+t.sale||0)-(+t.cost||0)-(+t.confirmig||0)-(+t.direct||0)}
 function commissionAmount(t){return +t.commissionAmount||0}
-function profit(t){return baseProfit(t)-commissionAmount(t)-((+t.sale||0)*.01)}
+function profit(t){return baseProfit(t)-commissionAmount(t)}
 function status(t){if(t.collected)return"Încasată";if(!t.docsDate)return"Documente lipsă";return estimate(t)<today()?"Întârziată":"Programată"}
 function visibleTrips(){return current==="Gheorghe Teodor Nita"?db.trips:db.trips.filter(t=>t.firm===current)}
 function effectiveBalance(){
@@ -104,19 +104,28 @@ function receivable(){return visibleTrips().filter(t=>!t.collected&&estimate(t))
 function payable(){let ts=visibleTrips();return ts.filter(t=>!t.paidCarrier).reduce((s,t)=>s+(+t.cost||0),0)+ts.filter(t=>!t.paidConfirmig).reduce((s,t)=>s+(+t.confirmig||0),0)+db.expenses.filter(e=>!e.paid).reduce((s,e)=>s+(+e.amount||0),0)}
 function renderDashboardTables(){
  let out="";
- ["Triomar","Blandios"].forEach(f=>{
+ (current==="Gheorghe Teodor Nita"?["Triomar","Blandios"]:[current]).forEach(f=>{
   let xs=db.trips.filter(t=>t.firm===f);
   out+=`<div class="card" style="margin:12px 0"><div class="subnav"><h3 style="margin:0">${f}</h3><b>${xs.length} curse</b></div><div class="table"><table style="min-width:700px"><thead><tr><th>Cursă</th><th>Client</th><th>Preț</th><th>Cost ${f}</th><th>Profit</th><th>Comision</th></tr></thead><tbody>${xs.length?xs.map(t=>`<tr><td>${esc(t.name)}</td><td>${esc(t.client)}</td><td>${money(t.sale,t.currency)}</td><td>${money(t.cost,t.currency)}</td><td>${money(profit(t),t.currency)}</td><td>${money(commissionAmount(t),t.currency)}</td></tr>`).join(""):`<tr><td colspan="6" class="empty">Nu există curse.</td></tr>`}</tbody></table></div></div>`;
  });
  $("dashboardTables").innerHTML=out;
 }
+function renderReports(){
+ const firms=current==="Gheorghe Teodor Nita"?["Gheorghe Teodor Nita","Blandios","Triomar"]:[current];
+ $("reportsBox").innerHTML=firms.map(f=>{
+  const xs=f==="Gheorghe Teodor Nita"?db.trips:db.trips.filter(t=>t.firm===f);
+  const sales=xs.reduce((s,t)=>s+(+t.sale||0),0), costs=xs.reduce((s,t)=>s+(+t.cost||0),0);
+  const comm=xs.reduce((s,t)=>s+commissionAmount(t),0), prof=xs.reduce((s,t)=>s+profit(t),0);
+  return `<div class="card" style="margin:12px 0"><h3>${esc(f)}</h3>Curse: <b>${xs.length}</b><br>Prețuri încasate: <b>${money(sales)}</b><br>Costuri: <b>${money(costs)}</b><br>Comisioane: <b>${money(comm)}</b><br>Profit operațional: <b>${money(prof)}</b></div>`;
+ }).join("");
+}
 function render(){
  let ts=visibleTrips(),bal=effectiveBalance(),inc=receivable(),out=payable(),tp=ts.reduce((s,t)=>s+profit(t),0),ex=db.expenses.reduce((s,e)=>s+(+e.amount||0),0);
  $("kpi").innerHTML=[["Bani disponibili",bal],["De încasat",inc],["De plătit",out],["Sold estimat",bal+inc-out],["Profit curse",tp],["Profit net",tp-ex]].map(x=>`<div class="card"><div class="label">${x[0]}</div><div class="value">${money(x[1])}</div></div>`).join("");
  const oldFirms=$("firms"); if(oldFirms){oldFirms.innerHTML=["Blandios","Triomar"].map(f=>{let xs=db.trips.filter(t=>t.firm==f);return`<div class="card firm" onclick="current='${f}';$('sectionTitle').textContent='${f}';page('dashboard');render()"><h3>${f}</h3><b>${xs.length} curse</b><br>Vânzări client: ${money(xs.reduce((s,t)=>s+(+t.sale||0),0))}<br>Profit: ${money(xs.reduce((s,t)=>s+profit(t),0))}</div>`}).join("")}
- renderTrips();renderCalendar();renderCommissions();renderExpenses();renderDashboardTables();$("reportsBox").innerHTML=`Gestiune: <b>${esc(current)}</b><br>Curse: <b>${ts.length}</b><br>Vânzări client (TVA inclus): <b>${money(ts.reduce((s,t)=>s+(+t.sale||0),0))}</b><br>TVA 21% calculat: <b>${money(ts.reduce((s,t)=>s+vat(t),0))}</b><br>Costuri B/T: <b>${money(ts.reduce((s,t)=>s+(+t.cost||0),0))}</b><br>Profit după comisioane: <b>${money(tp)}</b><br>Comisioane: <b>${money(ts.reduce((s,t)=>s+commissionAmount(t),0))}</b><br>Cheltuieli generale: <b>${money(ex)}</b><br>Profit net: <b>${money(tp-ex)}</b>`;
+ renderTrips();renderCalendar();renderCommissions();renderExpenses();renderDashboardTables();renderReports();
 }
-function renderTrips(){let f=$("firmFilter").value,d=visibleTrips().filter(t=>!f||t.firm==f);$("tripRows").innerHTML=d.length?d.map(t=>`<tr><td>${esc(t.firm)}</td><td>${esc(t.name)}</td><td>${esc(t.client)}</td><td>${esc(t.route)}</td><td>${money(t.sale,t.currency)}</td><td>${money(vat(t),t.currency)}</td><td>${money(saleNet(t),t.currency)}</td><td>${money(t.cost,t.currency)}</td><td>${esc(t.carrier)}</td><td>${money(commissionAmount(t),t.currency)}</td><td class="${profit(t)>=0?"profit":"loss"}">${money(profit(t),t.currency)}</td><td>${t.cmr||"—"}</td><td>${t.invoice||"—"}</td><td>${t.collected||estimate(t)||"—"}</td><td>${t.carrierPay||"—"}</td><td>${status(t)}</td><td><button class="btn" onclick="tripForm('${t.id}')">Edit</button></td></tr>`).join(""):`<tr><td colspan="17" class="empty">Nu există curse.</td></tr>`}
+function renderTrips(){let f=$("firmFilter").value,d=visibleTrips().filter(t=>!f||t.firm==f);$("tripRows").innerHTML=d.length?d.map(t=>`<tr class="${t.docsDate?"":"missing-docs"}"><td>${esc(t.firm)}</td><td>${esc(t.name)}</td><td>${esc(t.client)}</td><td>${esc(t.route)}</td><td>${money(t.sale,t.currency)}</td><td>${money(saleNet(t),t.currency)}</td><td>${money(t.cost,t.currency)}</td><td>${esc(t.carrier)}</td><td>${money(commissionAmount(t),t.currency)}</td><td class="${profit(t)>=0?"profit":"loss"}">${money(profit(t),t.currency)}</td><td>${t.cmr||"—"}</td><td>${t.invoice||"—"}</td><td>${t.collected||estimate(t)||"—"}</td><td>${t.carrierPay||"—"}</td><td>${status(t)}</td><td><button class="btn" onclick="tripForm('${t.id}')">Edit</button></td></tr>`).join(""):`<tr><td colspan="17" class="empty">Nu există curse.</td></tr>`}
 function renderCalendar(){
  let bal=effectiveBalance(),h="";for(let i=0;i<30;i++){let d=days(today(),i),ins=visibleTrips().filter(t=>t.collected==d).reduce((s,t)=>s+(+t.sale||0),0),car=visibleTrips().filter(t=>t.paidCarrier==d).reduce((s,t)=>s+(+t.cost||0),0),con=visibleTrips().filter(t=>t.paidConfirmig==d).reduce((s,t)=>s+(+t.confirmig||0),0),ex=db.expenses.filter(e=>e.paid==d).reduce((s,e)=>s+(+e.amount||0),0),net=ins-car-con-ex;bal+=net;h+=`<tr><td>${d}</td><td>${money(ins)}</td><td>${money(car)}</td><td>${money(con)}</td><td>${money(ex)}</td><td>${money(net)}</td><td>${money(bal)}</td></tr>`}$("calRows").innerHTML=h}
 function openM(t,b){$("mt").textContent=t;$("mb").innerHTML=b;$("modal").classList.add("open")}function closeM(){$("modal").classList.remove("open")}
