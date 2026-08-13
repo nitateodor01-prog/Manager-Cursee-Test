@@ -1,1 +1,1 @@
-v8 test: bara de jos eliminata, + Cursa vizibil, KPI zero fara curse, nu importa date financiare din cheile vechi.
+v9 test: pagina Curse restaurata, + Cursa vizibil, salvare curse reparata, salvare cheltuieli reparata, editare/stergere cheltuieli.

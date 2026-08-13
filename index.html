@@ -36,14 +36,35 @@ header{background:var(--dark);color:#fff;padding:18px max(16px,env(safe-area-ins
 
 <div id="app" class="wrap" style="display:none">
  <div class="subnav"><div><b id="sectionTitle">Gheorghe Teodor Nita</b></div><button class="btn" onclick="home()">Schimbă gestiunea</button></div>
- <div class="tabs"><button class="btn primary" onclick="page('dashboard')">Acasă</button><button class="btn" onclick="page('trips')">Curse</button><button class="btn" onclick="page('calendar')">Bani în cont</button><button class="btn" onclick="page('commissions')">Comision</button><button class="btn" onclick="page('reports')">Rapoarte</button></div>
+ <div class="tabs"><button class="btn primary" onclick="page('dashboard')">Acasă</button><button class="btn primary" onclick="tripForm()">+ Cursă</button><button class="btn" onclick="page('trips')">Curse</button><button class="btn" onclick="page('calendar')">Bani în cont</button><button class="btn" onclick="page('commissions')">Comision</button><button class="btn" onclick="page('reports')">Rapoarte</button></div>
 
  <section id="dashboard" class="page active">
   <div class="grid" id="kpi"></div>
   
  </section>
 
- <section id="calendar" class="page"><h2>Bani în cont 30 zile</h2><div class="table"><table><thead><tr><th>Data</th><th>Intrări efective</th><th>Transportatori</th><th>Confirmig</th><th>Cheltuieli</th><th>Net</th><th>Sold estimat</th></tr></thead><tbody id="calRows"></tbody></table></div></section>
+ <section id="trips" class="page">
+<div class="card">
+  <div class="subnav">
+    <h2 style="margin:0">Curse</h2>
+    <div class="actions">
+      <button class="btn primary" onclick="tripForm()">+ Cursă</button>
+      <button class="btn" onclick="carrierForm()">🚛 Transportatori</button>
+      <button class="btn" onclick="clientForm()">👤 Clienți</button>
+    </div>
+  </div>
+  <div class="actions">
+    <select class="btn" id="firmFilter" onchange="renderTrips()">
+      <option value="">Toate gestiunile vizibile</option>
+      <option>Gheorghe Teodor Nita</option><option>Blandios</option><option>Triomar</option>
+    </select>
+  </div>
+  <div class="table"><table style="min-width:1200px">
+    <thead><tr><th>Gestiune</th><th>Cursă</th><th>Client</th><th>Rută</th><th>Preț client</th><th>Cost</th><th>Transportator</th><th>Comision</th><th>Profit</th><th>CMR + factură</th><th>Încasare</th><th>Plată transportator</th><th>Status</th><th></th></tr></thead>
+    <tbody id="tripRows"></tbody>
+  </table></div>
+</div></section>
+<section id="calendar" class="page"><h2>Bani în cont 30 zile</h2><div class="table"><table><thead><tr><th>Data</th><th>Intrări efective</th><th>Transportatori</th><th>Confirmig</th><th>Cheltuieli</th><th>Net</th><th>Sold estimat</th></tr></thead><tbody id="calRows"></tbody></table></div></section>
  <section id="commissions" class="page">
 <div class="card"><div class="subnav"><h2 style="margin:0">Comision</h2><button class="btn primary" onclick="personForm()">+ Persoană</button></div>
 </div>
@@ -54,14 +75,14 @@ header{background:var(--dark);color:#fff;padding:18px max(16px,env(safe-area-ins
 <select class="btn" id="expenseFirmFilter" onchange="renderExpenses()"><option value="">Toate gestiunile</option><option>Gheorghe Teodor Nita</option><option>Blandios</option><option>Triomar</option></select>
 <select class="btn" id="expenseCatFilter" onchange="renderExpenses()"><option value="">Toate categoriile</option><option>Gestiune</option><option>Angajați</option><option>Altele</option></select>
 </div><div class="grid" id="expenseTotal"></div>
-<div class="table"><table><thead><tr><th>Data</th><th>Gestiune</th><th>Categorie</th><th>Descriere</th><th>Sumă</th><th>Plătit</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div>
+<div class="table"><table><thead><tr><th>Data</th><th>Gestiune</th><th>Categorie</th><th>Descriere</th><th>Sumă</th><th>Plătit</th><th>Acțiuni</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div>
 </section><section id="reports" class="page"><div class="card"><h2>Rapoarte</h2><div id="reportsBox"></div></div></section>
 </div>
 
 <div class="modal" id="modal"><div class="box"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="mt"></h2><button class="btn" onclick="closeM()">Închide</button></div><div id="mb"></div></div></div>
 
 <script>
-const K="cm_pwa_v5";let raw=localStorage.getItem(K);let db=JSON.parse(raw||"null")||{trips:[],expenses:[],accounts:[],people:[],carriers:[],clients:[]};db.people=db.people||[];db.carriers=db.carriers||[];db.clients=db.clients||[];db.people=db.people||[];let current="Gheorghe Teodor Nita";
+const K="cm_pwa_v9";let raw=localStorage.getItem(K);let db=JSON.parse(raw||"null")||{trips:[],expenses:[],accounts:[],people:[],carriers:[],clients:[]};db.people=db.people||[];db.carriers=db.carriers||[];db.clients=db.clients||[];db.people=db.people||[];let current="Gheorghe Teodor Nita";
 const $=x=>document.getElementById(x),today=()=>new Date().toISOString().slice(0,10);
 function save(){
   localStorage.setItem(K,JSON.stringify(db));
@@ -140,7 +161,7 @@ function render(){
  renderTrips();renderCalendar();renderCommissions();renderExpenses();renderDashboardTables();renderReports();
 }
 function renderTrips(){
- let f=$("firmFilter").value,d=visibleTrips().filter(t=>!f||t.firm==f);
+ let f=$("firmFilter")?.value||"",d=visibleTrips().filter(t=>!f||t.firm==f);
  $("tripRows").innerHTML=d.length?d.map(t=>{
    let rev=current==="Gheorghe Teodor Nita"?clientPrice(t):resalePrice(t);
    let cost=current==="Gheorghe Teodor Nita"?resalePrice(t):carrierCost(t);
@@ -210,8 +231,46 @@ function saveTrip(e,id){
   closeM(); render();
  }catch(err){console.error(err);alert("Cursa nu a putut fi salvată.")}
 }
+function renderExpenses(){
+  const ff=document.getElementById("expenseFirmFilter")?.value||"";
+  const cf=document.getElementById("expenseCatFilter")?.value||"";
+  const xs=(db.expenses||[]).filter(e=>(!ff||e.firm===ff)&&(!cf||e.cat===cf));
+  const total=xs.reduce((s,e)=>s+(+e.amount||0),0);
+  const totalBox=document.getElementById("expenseTotal");
+  if(totalBox) totalBox.innerHTML=`<div class="card"><div class="label">Total cheltuieli filtrate</div><div class="value">${money(total)}</div></div>`;
+  const rows=document.getElementById("expenseRows");
+  if(!rows)return;
+  rows.innerHTML=xs.length?xs.map(e=>`<tr>
+    <td>${e.due||"—"}</td><td>${esc(e.firm||"—")}</td><td>${esc(e.cat||"Altele")}</td>
+    <td>${esc(e.details||"")}</td><td>${money(e.amount)}</td><td>${e.paid?"Da":"Nu"}</td>
+    <td><button class="btn" onclick="editExpense('${e.id}')">Edit</button>
+    <button class="btn" onclick="deleteExpense('${e.id}')">Șterge</button></td>
+  </tr>`).join(""):`<tr><td colspan="7" class="empty">Nu există cheltuieli.</td></tr>`;
+}
+function deleteExpense(id){if(confirm("Ștergi această cheltuială?")){db.expenses=(db.expenses||[]).filter(e=>e.id!==id);localStorage.setItem(K,JSON.stringify(db));render();}}
+function editExpense(id){
+ const e=(db.expenses||[]).find(x=>x.id===id); if(!e)return;
+ openM("Editează cheltuială",`<form onsubmit="updateExpense(event,'${id}')"><div class="form">
+ <div class="field"><label>Data</label><input type="date" name="due" value="${e.due||today()}"></div>
+ <div class="field"><label>Gestiune</label><select name="firm"><option ${e.firm==="Gheorghe Teodor Nita"?"selected":""}>Gheorghe Teodor Nita</option><option ${e.firm==="Blandios"?"selected":""}>Blandios</option><option ${e.firm==="Triomar"?"selected":""}>Triomar</option></select></div>
+ <div class="field"><label>Categorie</label><select name="cat"><option ${e.cat==="Gestiune"?"selected":""}>Gestiune</option><option ${e.cat==="Angajați"?"selected":""}>Angajați</option><option ${e.cat==="Altele"?"selected":""}>Altele</option></select></div>
+ <div class="field full"><label>Descriere</label><input name="details" value="${esc(e.details)}"></div>
+ <div class="field"><label>Sumă</label><input type="number" step=".01" name="amount" value="${e.amount||0}"></div>
+ <div class="field"><label>Data plății</label><input type="date" name="paid" value="${e.paid||""}"></div>
+ </div><div class="actions"><button class="btn primary">Salvează</button></div></form>`);
+}
+function updateExpense(ev,id){ev.preventDefault();const f=new FormData(ev.target),e=(db.expenses||[]).find(x=>x.id===id);if(!e)return;for(const[k,v]of f.entries())e[k]=v;e.amount=Number(e.amount)||0;localStorage.setItem(K,JSON.stringify(db));closeM();render();}
 function expenseForm(){let id="e"+Date.now();openM("Cheltuială nouă",`<form onsubmit="saveExp(event,'${id}')"><div class="form"><div class="field"><label>Scadență</label><input type="date" name="due" value="${today()}"></div><div class="field"><label>Gestiune</label><select name="firm"><option>Gheorghe Teodor Nita</option><option>Blandios</option><option>Triomar</option></select></div><div class="field"><label>Categorie</label><select name="cat"><option>Gestiune</option><option>Angajați</option><option>Altele</option></select></div><div class="field full"><label>Descriere</label><input name="details"></div><div class="field"><label>Sumă</label><input type="number" step=".01" name="amount"></div><div class="field"><label>Cont</label><input name="account"></div><div class="field"><label>Data plății</label><input type="date" name="paid"></div></div><div class="actions"><button class="btn primary">Salvează</button></div></form>`)}
-function saveExp(e,id){e.preventDefault();let f=new FormData(e.target);db.expenses.push({id,due:f.get("due"),firm:f.get("firm"),cat:f.get("cat"),details:f.get("details"),amount:+f.get("amount")||0,account:f.get("account"),paid:f.get("paid")||""});save();closeM()}
+function saveExp(e,id){
+ e.preventDefault();
+ try{
+  const f=new FormData(e.target);
+  db.expenses=db.expenses||[];
+  db.expenses.push({id,due:f.get("due"),firm:f.get("firm"),cat:f.get("cat"),details:f.get("details"),amount:Number(f.get("amount"))||0,account:f.get("account"),paid:f.get("paid")||""});
+  localStorage.setItem(K,JSON.stringify(db));
+  closeM(); render();
+ }catch(err){console.error(err);alert("Cheltuiala nu a putut fi salvată.");}
+});save();closeM()}
 function accountForm(){let id="a"+Date.now();openM("Cont nou",`<form onsubmit="saveAcc(event,'${id}')"><div class="form"><div class="field"><label>Nume cont</label><input name="name" required></div><div class="field"><label>Monedă</label><select name="currency"><option>EUR</option><option>RON</option><option>USD</option></select></div><div class="field"><label>Sold actual</label><input type="number" step=".01" name="balance"></div></div><div class="actions"><button class="btn primary">Salvează</button></div></form>`)}
 function saveAcc(e,id){e.preventDefault();let f=new FormData(e.target);db.accounts.push({id,name:f.get("name"),currency:f.get("currency"),balance:+f.get("balance")||0});save();closeM()}
 function backup(){let b=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="gestiuni-curse-backup.json";a.click()}
