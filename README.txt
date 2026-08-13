@@ -1,1 +1,1 @@
-v7: fluxuri separate Gheorghe/Blandios/Triomar, profit per gestiune, clienti simpli, cheltuieli edit/delete, comision suma fixa, TVA eliminat din gestiune.
+v8 test: bara de jos eliminata, + Cursa vizibil, KPI zero fara curse, nu importa date financiare din cheile vechi.

@@ -57,11 +57,11 @@ header{background:var(--dark);color:#fff;padding:18px max(16px,env(safe-area-ins
 <div class="table"><table><thead><tr><th>Data</th><th>Gestiune</th><th>Categorie</th><th>Descriere</th><th>Sumă</th><th>Plătit</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div>
 </section><section id="reports" class="page"><div class="card"><h2>Rapoarte</h2><div id="reportsBox"></div></div></section>
 </div>
-<nav class="bottom"><button onclick="page('dashboard')">⌂<br>Acasă</button><button onclick="page('trips')">🚚<br>Curse</button><button onclick="page('calendar')">▣<br>Bani în cont</button><button onclick="page('commissions')">%</button><button onclick="page('reports')">▥<br>Rapoarte</button></nav>
+
 <div class="modal" id="modal"><div class="box"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="mt"></h2><button class="btn" onclick="closeM()">Închide</button></div><div id="mb"></div></div></div>
 
 <script>
-const K="cm_pwa_v5";let raw=localStorage.getItem(K)||localStorage.getItem("cm_pwa_v4")||localStorage.getItem("cm_pwa_v2");let db=JSON.parse(raw||"null")||{trips:[],expenses:[],accounts:[],people:[],carriers:[],clients:[]};db.people=db.people||[];db.carriers=db.carriers||[];db.clients=db.clients||[];db.people=db.people||[];let current="Gheorghe Teodor Nita";
+const K="cm_pwa_v5";let raw=localStorage.getItem(K);let db=JSON.parse(raw||"null")||{trips:[],expenses:[],accounts:[],people:[],carriers:[],clients:[]};db.people=db.people||[];db.carriers=db.carriers||[];db.clients=db.clients||[];db.people=db.people||[];let current="Gheorghe Teodor Nita";
 const $=x=>document.getElementById(x),today=()=>new Date().toISOString().slice(0,10);
 function save(){
   localStorage.setItem(K,JSON.stringify(db));
@@ -122,9 +122,21 @@ function renderReports(){
  }).join("");
 }
 function render(){
- let ts=visibleTrips(),bal=operationalAvailable(),inc=receivable(),out=payable(),tp=ts.reduce((s,t)=>s+tripProfitFor(t,current),0);
+ let ts=visibleTrips();
+ let hasTrips=ts.length>0;
+ let bal=hasTrips?operationalAvailable():0;
+ let inc=hasTrips?receivable():0;
+ let out=hasTrips?payable():0;
+ let tp=hasTrips?ts.reduce((s,t)=>s+tripProfitFor(t,current),0):0;
  let ex=db.expenses.filter(e=>e.firm===current).reduce((s,e)=>s+(+e.amount||0),0);
- $("kpi").innerHTML=[["Bani disponibili",bal],["De încasat",inc],["De plătit",out],["Sold estimat",bal+inc-out],["Profit curse",tp],["Profit net",tp-ex]].map(x=>`<div class="card"><div class="label">${x[0]}</div><div class="value">${money(x[1])}</div></div>`).join("");
+ $("kpi").innerHTML=[
+  ["Bani disponibili",bal],
+  ["De încasat",inc],
+  ["De plătit",out],
+  ["Sold estimat",bal+inc-out],
+  ["Profit curse",tp],
+  ["Profit net",tp-ex]
+ ].map(x=>`<div class="card"><div class="label">${x[0]}</div><div class="value">${money(x[1])}</div></div>`).join("");
  renderTrips();renderCalendar();renderCommissions();renderExpenses();renderDashboardTables();renderReports();
 }
 function renderTrips(){
