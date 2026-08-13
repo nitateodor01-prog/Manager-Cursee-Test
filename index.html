@@ -82,17 +82,18 @@ header{background:var(--dark);color:#fff;padding:18px max(16px,env(safe-area-ins
 <div class="modal" id="modal"><div class="box"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="mt"></h2><button class="btn" onclick="closeM()">Închide</button></div><div id="mb"></div></div></div>
 
 <script>
-const K="cm_pwa_v9";let raw=localStorage.getItem(K);let db=JSON.parse(raw||"null")||{trips:[],expenses:[],accounts:[],people:[],carriers:[],clients:[]};db.people=db.people||[];db.carriers=db.carriers||[];db.clients=db.clients||[];db.people=db.people||[];let current="Gheorghe Teodor Nita";
+const K="cm_pwa_v10";let raw=localStorage.getItem(K);let db=JSON.parse(raw||"null")||{trips:[],expenses:[],accounts:[],people:[],carriers:[],clients:[]};db.people=db.people||[];db.carriers=db.carriers||[];db.clients=db.clients||[];db.people=db.people||[];let current="Gheorghe Teodor Nita";
 const $=x=>document.getElementById(x),today=()=>new Date().toISOString().slice(0,10);
 function save(){
   localStorage.setItem(K,JSON.stringify(db));
   try{render()}catch(err){console.error("Render error after save:",err)}
 }
+function $(id){return document.getElementById(id)}
 function money(x,c="EUR"){try{return new Intl.NumberFormat("ro-RO",{style:"currency",currency:c}).format(+x||0)}catch{return(+x||0).toFixed(2)+" "+c}}
 function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 function toggleSide(){document.getElementById("side").classList.toggle("open");document.getElementById("overlay").classList.toggle("open")}
 function navSide(id){page(id);if(document.getElementById("side").classList.contains("open"))toggleSide()}
-function page(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(id).classList.add("active")}
+function page(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));const el=$(id);if(el)el.classList.add("active");}
 function home(){$("app").style.display="none";$("landing").style.display="flex"}
 function enter(f){current=f;$("sectionTitle").textContent=f;$("landing").style.display="none";$("app").style.display="block";page("dashboard");render()}
 function days(d,n){let x=new Date(d+"T12:00:00");x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)}

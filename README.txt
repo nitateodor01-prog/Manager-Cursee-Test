@@ -1,1 +1,1 @@
-v9 test: pagina Curse restaurata, + Cursa vizibil, salvare curse reparata, salvare cheltuieli reparata, editare/stergere cheltuieli.
+v10: reparata navigarea de la Alege gestiunea prin restaurarea functiei DOM $().
